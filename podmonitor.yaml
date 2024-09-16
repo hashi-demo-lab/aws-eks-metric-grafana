@@ -1,0 +1,22 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PodMonitor
+metadata:
+  labels:
+    app: terraform-enterprise
+    kps: "true"
+  name: terraform-enterprise
+  namespace: monitoring
+spec:
+  podMetricsEndpoints:
+    - targetPort: 9090
+      interval: 5s
+      path: /metrics
+      params:
+        format:
+          - prometheus
+  namespaceSelector:
+    matchNames:
+    - tfe
+  selector:
+    matchLabels:
+      app: terraform-enterprise
