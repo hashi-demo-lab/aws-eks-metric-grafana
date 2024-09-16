@@ -1,0 +1,21 @@
+apiVersion: monitoring.coreos.com/v1
+kind: ServiceMonitor
+metadata:
+  labels:
+    app: terraform-enterprise
+  name: terraform-enterprise
+  namespace: monitoring
+spec:
+  endpoints:
+    - port: metrics
+      interval: 10s
+      path: /metrics
+      params:
+        format:
+          - prometheus
+  namespaceSelector:
+    matchNames:
+    - tfe
+  selector:
+    matchLabels:
+      app: terraform-enterprise
